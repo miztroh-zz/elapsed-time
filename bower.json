@@ -10,8 +10,7 @@
     "polymer",
     "elapsed",
     "time",
-    "elapsed",
-    "time"
+    "elapsed time"
   ],
   "license": "MIT",
   "homepage": "https://github.com/miztroh/elapsed-time",
