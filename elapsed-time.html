@@ -1,0 +1,79 @@
+<link rel="import" href="../polymer/polymer.html">
+<polymer-element name="elapsed-time">
+	<template>
+		<span id="elapsedTime"></span>
+	</template>
+	<script>
+		Polymer(
+			{
+				publish: {
+					date: {
+						value: (
+							function () {
+								var date = new Date();
+								return date.getFullYear() + '-' + (date.getMonth() + 1 < 10 ? '0' : '') + (date.getMonth() + 1) + '-' + (date.getDate() < 10 ? '0' : '') + date.getDate() + ' ' + (date.getHours() < 10 ? '0' : '') + date.getHours() + ':' + (date.getMinutes < 10 ? '0' : '') + date.getMinutes() + ':' + (date.getSeconds() < 10 ? '0' : '') + date.getSeconds();
+							}
+						)(),
+						reflect: true
+					},
+					showSeconds: false
+				},
+				ready: function () {
+					var that = this;
+
+					var elapsedTime = function () {
+						var date = new Date(that.date);
+
+						if (isNaN(date)) {
+							return that.$.elapsedTime.text = '';
+						}
+
+				    var ageInSeconds = parseInt((new Date().getTime() - date.getTime()) / 1000);
+
+				    var s = function (n) {
+				    	return n === 1 ? '' : 's'
+				    };
+
+						var elapsedTime;
+
+				    if (ageInSeconds < 60) {
+				    	if (that.showSeconds) {
+								var n = ageInSeconds;
+								elapsedTime = n + ' second' + s(n) + ' ago';
+				    	} else {
+					      elapsedTime = 'just now';
+				    	}
+				    } else if (ageInSeconds < 60 * 60) {
+							var n = Math.floor(ageInSeconds / 60);
+							elapsedTime = n + ' minute' + s(n) + ' ago';
+				    } else if (ageInSeconds < 60 * 60 * 24) {
+							var n = Math.floor(ageInSeconds / 60 / 60);
+							elapsedTime = n + ' hour' + s(n) + ' ago';
+				    } else if (ageInSeconds < 60 * 60 * 24 * 7) {
+							var n = Math.floor(ageInSeconds / 60 / 60 / 24);
+							elapsedTime = n + ' day' + s(n) + ' ago';
+				    } else if (ageInSeconds < 60 * 60 * 24 * 31) {
+							var n = Math.floor(ageInSeconds / 60 / 60 / 24 / 7);
+							elapsedTime = n + ' week' + s(n) + ' ago';
+				    } else if (ageInSeconds < 60 * 60 * 24 * 365) {
+							var n = Math.floor(ageInSeconds / 60 / 60 / 24 / 31);
+							elapsedTime = n + ' month' + s(n) + ' ago';
+				    } else {
+							var n = Math.floor(ageInSeconds / 60 / 60 / 24 / 365);
+							elapsedTime = n + ' year' + s(n) + ' ago';
+				    }
+
+						that.$.elapsedTime.innerHTML = elapsedTime;
+					};
+
+					elapsedTime();
+
+					setInterval(
+						elapsedTime,
+						1000
+					);
+				}
+			}
+		);
+	</script>
+</polymer-element>

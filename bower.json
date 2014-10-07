@@ -1,0 +1,25 @@
+{
+  "name": "elapsed-time",
+  "version": "0.0.1",
+  "authors": [
+    "miztroh <miztroh@gmail.com>"
+  ],
+  "description": "A Polymer custom element for displaying elapsed time.",
+  "main": "elapsed-time.html",
+  "keywords": [
+    "polymer",
+    "elapsed",
+    "time",
+    "elapsed",
+    "time"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/miztroh/elapsed-time",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
