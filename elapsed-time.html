@@ -15,7 +15,65 @@ A Polymer custom element for displaying elapsed time.
 				dateChanged: function () {
 					if (isNaN(new Date(this.date))) {
 						this.date = new Date();
+						return;
 					}
+					/**
+					* Fires when date property is modified.
+					*
+					* @event dateChanged
+					*/
+					this.fire('dateChanged');
+				},
+				/**
+         * Get the current elapsed time.
+         *
+         * @method elapsedTime
+         * @returns string
+         */
+				elapsedTime: function () {
+					var date = new Date(that.date);
+			    var ageInSeconds = parseInt((new Date().getTime() - date.getTime()) / 1000);
+
+			    var s = function (n) {
+			    	return n === 1 ? '' : 's'
+			    };
+
+					var elapsedTime;
+					var now_or_ago = ' ago';
+
+					if (ageInSeconds < 0) {
+						now_or_ago = ' from now';
+						ageInSeconds = Math.abs(ageInSeconds);
+					}
+
+			    if (ageInSeconds < 60) {
+			    	if (that.showSeconds) {
+							var n = ageInSeconds;
+							elapsedTime = n + ' second' + s(n) + now_or_ago;
+			    	} else {
+				      elapsedTime = 'just now';
+			    	}
+			    } else if (ageInSeconds < 60 * 60) {
+						var n = Math.floor(ageInSeconds / 60);
+						elapsedTime = n + ' minute' + s(n) + now_or_ago;
+			    } else if (ageInSeconds < 60 * 60 * 24) {
+						var n = Math.floor(ageInSeconds / 60 / 60);
+						elapsedTime = n + ' hour' + s(n) + now_or_ago;
+			    } else if (ageInSeconds < 60 * 60 * 24 * 7) {
+						var n = Math.floor(ageInSeconds / 60 / 60 / 24);
+						elapsedTime = n + ' day' + s(n) + now_or_ago;
+			    } else if (ageInSeconds < 60 * 60 * 24 * 31) {
+						var n = Math.floor(ageInSeconds / 60 / 60 / 24 / 7);
+						elapsedTime = n + ' week' + s(n) + now_or_ago;
+			    } else if (ageInSeconds < 60 * 60 * 24 * 365) {
+						var n = Math.floor(ageInSeconds / 60 / 60 / 24 / 31);
+						elapsedTime = n + ' month' + s(n) + now_or_ago;
+			    } else {
+						var n = Math.floor(ageInSeconds / 60 / 60 / 24 / 365);
+						elapsedTime = n + ' year' + s(n) + now_or_ago;
+			    }
+
+					return elapsedTime;
 				},
 				publish: {
 					/**
@@ -46,61 +104,12 @@ A Polymer custom element for displaying elapsed time.
 				ready: function () {
 					var that = this;
 
-					var elapsedTime = function () {
-						var date = new Date(that.date);
-
-						if (isNaN(date)) {
-							return that.$.elapsedTime.text = '';
-						}
-
-				    var ageInSeconds = parseInt((new Date().getTime() - date.getTime()) / 1000);
-
-				    var s = function (n) {
-				    	return n === 1 ? '' : 's'
-				    };
-
-						var elapsedTime;
-						var now_or_ago = ' ago';
-
-						if (ageInSeconds < 0) {
-							now_or_ago = ' from now';
-							ageInSeconds = Math.abs(ageInSeconds);
-						}
-
-				    if (ageInSeconds < 60) {
-				    	if (that.showSeconds) {
-								var n = ageInSeconds;
-								elapsedTime = n + ' second' + s(n) + now_or_ago;
-				    	} else {
-					      elapsedTime = 'just now';
-				    	}
-				    } else if (ageInSeconds < 60 * 60) {
-							var n = Math.floor(ageInSeconds / 60);
-							elapsedTime = n + ' minute' + s(n) + now_or_ago;
-				    } else if (ageInSeconds < 60 * 60 * 24) {
-							var n = Math.floor(ageInSeconds / 60 / 60);
-							elapsedTime = n + ' hour' + s(n) + now_or_ago;
-				    } else if (ageInSeconds < 60 * 60 * 24 * 7) {
-							var n = Math.floor(ageInSeconds / 60 / 60 / 24);
-							elapsedTime = n + ' day' + s(n) + now_or_ago;
-				    } else if (ageInSeconds < 60 * 60 * 24 * 31) {
-							var n = Math.floor(ageInSeconds / 60 / 60 / 24 / 7);
-							elapsedTime = n + ' week' + s(n) + now_or_ago;
-				    } else if (ageInSeconds < 60 * 60 * 24 * 365) {
-							var n = Math.floor(ageInSeconds / 60 / 60 / 24 / 31);
-							elapsedTime = n + ' month' + s(n) + now_or_ago;
-				    } else {
-							var n = Math.floor(ageInSeconds / 60 / 60 / 24 / 365);
-							elapsedTime = n + ' year' + s(n) + now_or_ago;
-				    }
-
-						that.$.elapsedTime.innerHTML = elapsedTime;
-					};
-
-					elapsedTime();
+					that.$.elapsedTime.innerHTML = that.elapsedTime();
 
 					setInterval(
-						elapsedTime,
+						function () {
+							that.$.elapsedTime.innerHTML = that.elapsedTime();
+						},
 						1000
 					);
 				}
