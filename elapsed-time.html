@@ -12,11 +12,13 @@ A Polymer custom element that displays the time that has elapsed since a given d
 			{
 				dateChanged: function () {
 					if (isNaN(new Date(this.date))) {
+						console.log('isNaN', this.date);
 						this.date = new Date();
 						return;
 					}
 
 					if (!(this.date instanceof Date)) {
+						console.log('!instanceof', this.date);
 						this.date = new Date(this.date);
 						return;
 					}
