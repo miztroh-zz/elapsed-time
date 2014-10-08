@@ -12,7 +12,19 @@ A Polymer custom element for displaying elapsed time.`.
 	<script>
 		Polymer(
 			{
+				dateChanged: function () {
+					if (isNaN(new Date(this.date))) {
+						this.date = new Date();
+					}
+				},
 				publish: {
+					/**
+	        * The date from which elapsed time is calculated.
+	        *
+	        * @property date
+	        * @type String
+	        * @default Today's date in the format YYYY-MM-DD HH:MM:SS
+	        */
 					date: {
 						value: (
 							function () {
@@ -41,32 +53,38 @@ A Polymer custom element for displaying elapsed time.`.
 				    };
 
 						var elapsedTime;
+						var now_or_ago = ' ago';
+
+						if (ageInSeconds < 0) {
+							now_or_ago = ' from now';
+							ageInSeconds = Math.abs(ageInSeconds);
+						}
 
 				    if (ageInSeconds < 60) {
 				    	if (that.showSeconds) {
 								var n = ageInSeconds;
-								elapsedTime = n + ' second' + s(n) + ' ago';
+								elapsedTime = n + ' second' + s(n) + now_or_ago;
 				    	} else {
 					      elapsedTime = 'just now';
 				    	}
 				    } else if (ageInSeconds < 60 * 60) {
 							var n = Math.floor(ageInSeconds / 60);
-							elapsedTime = n + ' minute' + s(n) + ' ago';
+							elapsedTime = n + ' minute' + s(n) + now_or_ago;
 				    } else if (ageInSeconds < 60 * 60 * 24) {
 							var n = Math.floor(ageInSeconds / 60 / 60);
-							elapsedTime = n + ' hour' + s(n) + ' ago';
+							elapsedTime = n + ' hour' + s(n) + now_or_ago;
 				    } else if (ageInSeconds < 60 * 60 * 24 * 7) {
 							var n = Math.floor(ageInSeconds / 60 / 60 / 24);
-							elapsedTime = n + ' day' + s(n) + ' ago';
+							elapsedTime = n + ' day' + s(n) + now_or_ago;
 				    } else if (ageInSeconds < 60 * 60 * 24 * 31) {
 							var n = Math.floor(ageInSeconds / 60 / 60 / 24 / 7);
-							elapsedTime = n + ' week' + s(n) + ' ago';
+							elapsedTime = n + ' week' + s(n) + now_or_ago;
 				    } else if (ageInSeconds < 60 * 60 * 24 * 365) {
 							var n = Math.floor(ageInSeconds / 60 / 60 / 24 / 31);
-							elapsedTime = n + ' month' + s(n) + ' ago';
+							elapsedTime = n + ' month' + s(n) + now_or_ago;
 				    } else {
 							var n = Math.floor(ageInSeconds / 60 / 60 / 24 / 365);
-							elapsedTime = n + ' year' + s(n) + ' ago';
+							elapsedTime = n + ' year' + s(n) + now_or_ago;
 				    }
 
 						that.$.elapsedTime.innerHTML = elapsedTime;
