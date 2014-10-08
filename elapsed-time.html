@@ -31,7 +31,7 @@ A Polymer custom element for displaying elapsed time.
          * @returns string
          */
 				elapsedTime: function () {
-					var date = new Date(that.date);
+					var date = new Date(this.date);
 			    var ageInSeconds = parseInt((new Date().getTime() - date.getTime()) / 1000);
 
 			    var s = function (n) {
@@ -47,7 +47,7 @@ A Polymer custom element for displaying elapsed time.
 					}
 
 			    if (ageInSeconds < 60) {
-			    	if (that.showSeconds) {
+			    	if (this.showSeconds) {
 							var n = ageInSeconds;
 							elapsedTime = n + ' second' + s(n) + now_or_ago;
 			    	} else {
