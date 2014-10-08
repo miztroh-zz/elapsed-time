@@ -5,11 +5,26 @@ A Polymer custom element that displays the time that has elapsed since a given d
 @element elapsed-time
 @homepage https://github.com/miztroh/elapsed-time
 -->
-<polymer-element name="elapsed-time">
+<polymer-element name="elapsed-time" attributes="date showSeconds">
 	<template><span id="elapsedTime"></span></template>
 	<script>
+
 		Polymer(
 			{
+				/**
+        * The date from which elapsed time is calculated.
+        *
+        * @property date
+        * @type Date
+        * @default new Date()
+        */
+				/**
+        * Whether to show elapsed time when less than 60 seconds.
+        *
+        * @property showSeconds
+        * @type boolean
+        * @default false
+        */
 				dateChanged: function () {
 					if (isNaN(new Date(this.date))) {
 						console.log('isNaN', this.date);
@@ -79,24 +94,6 @@ A Polymer custom element that displays the time that has elapsed since a given d
 			    }
 
 					return elapsedTime;
-				},
-				publish: {
-					/**
-	        * The date from which elapsed time is calculated.
-	        *
-	        * @property date
-	        * @type Date
-	        * @default new Date()
-	        */
-					date: new Date(),
-					/**
-	        * Whether to show elapsed time when less than 60 seconds.
-	        *
-	        * @property showSeconds
-	        * @type boolean
-	        * @default false
-	        */
-					showSeconds: false
 				},
 				ready: function () {
 					var that = this;
