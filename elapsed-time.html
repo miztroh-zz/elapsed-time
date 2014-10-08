@@ -131,6 +131,10 @@ A Polymer custom element that displays the time that has elapsed since a given d
 					)();
 
 					intervals[this.index] = false;
+
+					if (this.date === undefined || this.date === null) {
+						this.dateChanged();
+					}
 				}
 			}
 		);
