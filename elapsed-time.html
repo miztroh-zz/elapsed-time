@@ -6,9 +6,7 @@ A Polymer custom element that displays the time that has elapsed since a given d
 @homepage https://github.com/miztroh/elapsed-time
 -->
 <polymer-element name="elapsed-time">
-	<template>
-		<span id="elapsedTime"></span>
-	</template>
+	<template><span id="elapsedTime"></span></template>
 	<script>
 		Polymer(
 			{
@@ -20,6 +18,7 @@ A Polymer custom element that displays the time that has elapsed since a given d
 
 					if (!(this.date instanceof Date)) {
 						this.date = new Date(this.date);
+						return;
 					}
 					/**
 					* Fires when date property is modified.
@@ -27,6 +26,7 @@ A Polymer custom element that displays the time that has elapsed since a given d
 					* @event dateChanged
 					*/
 					this.fire('dateChanged');
+					console.log(this.date);
 				},
 				/**
          * Get the current elapsed time.
