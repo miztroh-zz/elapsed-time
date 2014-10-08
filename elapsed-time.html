@@ -1,6 +1,6 @@
 <link rel="import" href="../polymer/polymer.html">
 <!--
-A Polymer custom element for displaying elapsed time.`.
+A Polymer custom element for displaying elapsed time.
 
 @element elapsed-time
 @homepage https://github.com/miztroh/elapsed-time
@@ -22,7 +22,7 @@ A Polymer custom element for displaying elapsed time.`.
 	        * The date from which elapsed time is calculated.
 	        *
 	        * @property date
-	        * @type String
+	        * @type string
 	        * @default Today's date in the format YYYY-MM-DD HH:MM:SS
 	        */
 					date: {
@@ -34,6 +34,13 @@ A Polymer custom element for displaying elapsed time.`.
 						)(),
 						reflect: true
 					},
+					/**
+	        * Whether to show elapsed time when less than 60 seconds.
+	        *
+	        * @property showSeconds
+	        * @type boolean
+	        * @default false
+	        */
 					showSeconds: false
 				},
 				ready: function () {
