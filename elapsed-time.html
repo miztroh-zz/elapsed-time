@@ -45,6 +45,7 @@ A Polymer custom element that displays the time that has elapsed since a given d
 						return;
 					}
 
+					var that = this;
 					that.$.elapsedTime.innerHTML = that.elapsedTime();
 
 					intervals[this.index] = setInterval(
