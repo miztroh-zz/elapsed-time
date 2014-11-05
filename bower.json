@@ -1,6 +1,6 @@
 {
   "name": "elapsed-time",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "authors": [
     "miztroh <miztroh@gmail.com>"
   ],
@@ -10,7 +10,8 @@
     "polymer",
     "elapsed",
     "time",
-    "elapsed time"
+    "elapsed time",
+    "web-components"
   ],
   "license": "MIT",
   "homepage": "https://github.com/miztroh/elapsed-time",
